@@ -8,7 +8,6 @@ import {
   isNullOrUndefined,
   suppressSensitiveInformation
 } from './util'
-import fs from 'fs'
 
 /* Initializes git in the workspace. */
 export async function init(action: ActionInterface): Promise<void | Error> {
