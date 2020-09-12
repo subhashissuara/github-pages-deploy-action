@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        uses: actions/checkout@v2.3.1 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
         with:
           persist-credentials: false
 
@@ -62,11 +62,12 @@ jobs:
           npm run build
 
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: JamesIves/github-pages-deploy-action@3.5.9
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: build # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
 ```
 
 If you'd like to make it so the workflow only triggers on push events to specific branches then you can modify the `on` section.
@@ -77,6 +78,8 @@ on:
     branches:
       - master
 ```
+
+It's recommended that you use [Dependabot](https://dependabot.com/github-actions/) to keep your workflow up-to-date. You can find the latest tagged version on the [GitHub Marketplace](https://github.com/marketplace/actions/deploy-to-github-pages) or on the [releases page](https://github.com/JamesIves/github-pages-deploy-action/releases).
 
 #### Install as a Node Module 📦
 
@@ -315,7 +318,9 @@ If you use a [container](https://help.github.com/en/actions/automating-your-work
 
 ### Additional Build Files 📁
 
-If you're using a custom domain and require a `CNAME` file, or if you require the use of a `.nojekyll` file, you can safely commit these files directly into deployment branch without them being overridden after each deployment.
+If you're using a custom domain and require a `CNAME` file, or if you require the use of a `.nojekyll` file, you can safely commit these files directly into deployment branch without them being overridden after each deployment. Additionally you can include these files in your deployment folder to update them.
+
+If you wish to remove these files you must go into the deployment branch directly to remove them. This is to prevent accidental changes in your deployment script from creating breaking changes.
 
 ---
 
