@@ -87,7 +87,9 @@ export const action: ActionInterface = {
     : process.env.GITHUB_ACTOR
     ? process.env.GITHUB_ACTOR
     : 'GitHub Pages Deploy Action',
-  preserve: getInput('PRESERVE'),
+  preserve: !isNullOrUndefined(getInput('PRESERVE'))
+  ? getInput('CLEAN').toLowerCase() === 'true'
+  : false,
   repositoryName: !isNullOrUndefined(getInput('REPOSITORY_NAME'))
     ? getInput('REPOSITORY_NAME')
     : repository && repository.full_name

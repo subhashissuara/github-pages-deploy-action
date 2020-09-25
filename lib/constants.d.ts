@@ -25,6 +25,8 @@ export interface ActionInterface {
     lfs?: boolean | null;
     /** The git config name. */
     name?: string;
+    /** Preserves the existing workspace changes. */
+    preserve?: boolean | null;
     /** The repository path, for example JamesIves/github-pages-deploy-action. */
     repositoryName?: string;
     /** The fully qualified repositpory path, this gets auto generated if repositoryName is provided. */
