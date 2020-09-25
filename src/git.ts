@@ -35,6 +35,12 @@ export async function init(action: ActionInterface): Promise<void | Error> {
       action.workspace,
       action.silent
     )
+
+    if (action.preserve) {
+      info(`Stashing workspace changes…`)
+      await execute(`git stash`, action.workspace, action.silent)
+    }
+
     await execute(
       `git fetch --no-recurse-submodules`,
       action.workspace,
@@ -164,12 +170,17 @@ export async function deploy(action: ActionInterface): Promise<Status> {
         action.silent
       )
     }
-  
+
     await execute(
       `git worktree add --checkout ${temporaryDeploymentDirectory} origin/${action.branch}`,
       action.workspace,
       action.silent
     )
+
+    if (action.preserve) {
+      info(`Restoring workspace changes…`)
+      await execute(`git stash --apply`, action.workspace, action.silent)
+    }
 
     // Ensures that items that need to be excluded from the clean job get parsed.
     let excludes = ''
