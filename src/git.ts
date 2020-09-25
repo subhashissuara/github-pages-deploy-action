@@ -179,7 +179,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
 
     if (action.preserve) {
       info(`Restoring workspace changes…`)
-      await execute(`git stash --apply`, action.workspace, action.silent)
+      await execute(`git stash apply`, action.workspace, action.silent)
     }
 
     // Ensures that items that need to be excluded from the clean job get parsed.
