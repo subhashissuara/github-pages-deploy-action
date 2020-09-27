@@ -25,7 +25,7 @@ export interface ActionInterface {
     lfs?: boolean | null;
     /** The git config name. */
     name?: string;
-    /** Preserves the existing workspace changes. */
+    /** Determines if the workspace should be stashed/restored prior to comitting. */
     preserve?: boolean | null;
     /** The repository path, for example JamesIves/github-pages-deploy-action. */
     repositoryName?: string;
