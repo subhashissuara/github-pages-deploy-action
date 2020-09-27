@@ -188,6 +188,12 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       )
     }
 
+    await execute(
+      `git worktree add --checkout ${temporaryDeploymentDirectory} origin/${action.branch}`,
+      action.workspace,
+      action.silent
+    )
+
     if (action.preserve) {
       info(`Applying stashed workspace changes… ⬆️`)
 
@@ -197,12 +203,6 @@ export async function deploy(action: ActionInterface): Promise<Status> {
         info('Unable to apply stash, skipping…')
       }
     }
-
-    await execute(
-      `git worktree add --checkout ${temporaryDeploymentDirectory} origin/${action.branch}`,
-      action.workspace,
-      action.silent
-    )
 
     // Ensures that items that need to be excluded from the clean job get parsed.
     let excludes = ''
@@ -227,7 +227,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       info(`Creating target folder if it doesn't already exist… 📌`)
       await mkdirP(`${temporaryDeploymentDirectory}/${action.targetFolder}`)
     }
-    
+
     /*
       Pushes all of the build files into the deployment directory.
       Allows the user to specify the root if '.' is provided.
