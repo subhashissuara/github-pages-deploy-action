@@ -29,14 +29,23 @@ export async function init(action: ActionInterface): Promise<void | Error> {
       action.silent
     )
 
-    try {
-      await execute(`git remote rm origin`, action.workspace, action.silent)
-    } finally {
-      await execute(
-        `git remote add origin ${action.repositoryPath}`,
-        action.workspace,
-        action.silent
-      )
+    await execute(`git remote rm origin`, action.workspace, action.silent) || true;
+    await execute(
+      `git remote add origin ${action.repositoryPath}`,
+      action.workspace,
+      action.silent
+    )
+
+    if (action.preserve) {
+      info(`Stashing workspace changes… ⬆️`)
+      await execute(`git stash`, action.workspace, action.silent);
+    }
+
+    await execute(
+      `git fetch --no-recurse-submodules`,
+      action.workspace,
+      action.silent
+    )
 
       if (action.preserve) {
         info(`Stashing workspace changes…`)
@@ -172,6 +181,11 @@ export async function deploy(action: ActionInterface): Promise<Status> {
         action.workspace,
         action.silent
       )
+    }
+
+    if (action.preserve) {
+      info(`Applying stashed workspace changes… ⬆️`)
+      await execute(`git stash apply`, action.workspace, action.silent) || true;
     }
 
     await execute(

@@ -78,7 +78,7 @@ inputs:
     required: false
 
   PRESERVE:
-    description: "TODO"
+    description: "Preserves and restores any workspace changes prior to deployment."
     required: false
 
 outputs:

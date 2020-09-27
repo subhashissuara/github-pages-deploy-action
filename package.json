@@ -33,17 +33,17 @@
     "deployment"
   ],
   "dependencies": {
-    "@actions/core": "1.2.5",
+    "@actions/core": "1.2.6",
     "@actions/exec": "1.0.4",
     "@actions/github": "4.0.0",
     "@actions/io": "1.0.2"
   },
   "devDependencies": {
-    "@types/jest": "26.0.13",
-    "@types/node": "14.10.2",
+    "@types/jest": "26.0.14",
+    "@types/node": "14.11.2",
     "eslint": "7.9.0",
     "eslint-plugin-github": "3.4.1",
-    "eslint-plugin-jest": "24.0.1",
+    "eslint-plugin-jest": "24.0.2",
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "25.5.4",
     "jest-circus": "26.4.2",
