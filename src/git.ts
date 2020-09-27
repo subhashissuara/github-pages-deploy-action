@@ -204,11 +204,6 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       action.silent
     )
 
-    if (action.preserve) {
-      info(`Restoring workspace changes…`)
-      await execute(`git stash apply`, action.workspace, action.silent)
-    }
-
     // Ensures that items that need to be excluded from the clean job get parsed.
     let excludes = ''
     if (action.clean && action.cleanExclude) {
@@ -232,10 +227,7 @@ export async function deploy(action: ActionInterface): Promise<Status> {
       info(`Creating target folder if it doesn't already exist… 📌`)
       await mkdirP(`${temporaryDeploymentDirectory}/${action.targetFolder}`)
     }
-
-    console.log('checking existance')
-    await execute(`ls ${action.folder}`, action.workspace, false)
-
+    
     /*
       Pushes all of the build files into the deployment directory.
       Allows the user to specify the root if '.' is provided.
